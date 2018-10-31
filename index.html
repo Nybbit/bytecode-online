@@ -66,7 +66,8 @@
 											<p>Bytecode programs are made up of <strong>operation codes</strong> aka <strong>opcodes</strong>. Opcodes
 												are
 												single basic instructions (for example,
-												<i>push</i> or <i>add</i>). On this site, you can write simple programs using these opcodes. Programs are run instruction by instruction starting on line 1.</p>
+												<i>push</i> or <i>add</i>). On this site, you can write simple programs using these opcodes. Programs are
+												run instruction by instruction starting on line 1.</p>
 											<br>
 											<a class="button is-warning" id="opcode-toggle">Toggle opcode cheat sheet</a>
 										</article>
@@ -96,8 +97,10 @@
 											<p><strong><i>Important info</i></strong></p>
 											<p>- <strong>Pop</strong> means to remove an element off the top of the stack</p>
 											<p>- <strong>Push</strong> means to add an element onto the top of the stack</p>
-											<p>- <strong>Print</strong> means to output something to the output console (underneath the "Run Program" button)</p>
-											<p>- When an opcode needs to interact with an element in the stack (for example, printing a number), it will pop it from the stack to read it and <strong>it will not replace it</strong></p>
+											<p>- <strong>Print</strong> means to output something to the output console (underneath the "Run Program"
+												button)</p>
+											<p>- When an opcode needs to interact with an element in the stack (for example, printing a number), it will
+												pop it from the stack to read it and <strong>it will not replace it</strong></p>
 											<br>
 											<p><strong>push [number]</strong> - Push a number onto the stack</p>
 											<p><strong>jump [number]</strong> - Jump to specified line unconditionally</p>
@@ -143,111 +146,110 @@
 			</div>
 		</div>
 		<hr>
-		<div class="columns">
-			<!-- Program and output -->
-			<div class="column">
-				<h1 class="title">
-					Program
-				</h1>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Line</th>
-							<th>Instruction</th>
-						</tr>
-					</thead>
-					<tbody id="program">
-					</tbody>
-				</table>
-			</div>
+		<div class="container">
+			<div class="columns">
+				<!-- Program and output -->
+				<div class="column">
+					<h1 class="title">
+						Program
+					</h1>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Line</th>
+								<th>Instruction</th>
+							</tr>
+						</thead>
+						<tbody id="program">
+						</tbody>
+					</table>
+				</div>
 
-			<div class="column">
-				<div class="columns">
-					<div class="column">
-						<h1 class="title">
-							Stack
-						</h1>
-						<table class="table">
-							<thead>
-								<tr>
-									<th>Index</th>
-									<th>Content</th>
-								</tr>
-							</thead>
-							<tbody id="stack">
-							</tbody>
-						</table>
-					</div>
-					<div class="column">
-						<h1 class="title">
-							Heap
-						</h1>
-						<table class="table">
-							<thead>
-								<tr>
-									<th>Location</th>
-									<th>Content</th>
-								</tr>
-							</thead>
-							<tbody id="heap">
-							</tbody>
-						</table>
+				<div class="column">
+					<div class="columns">
+						<div class="column">
+							<h1 class="title">
+								Stack
+							</h1>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Index</th>
+										<th>Content</th>
+									</tr>
+								</thead>
+								<tbody id="stack">
+								</tbody>
+							</table>
+						</div>
+						<div class="column">
+							<h1 class="title">
+								Heap
+							</h1>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Location</th>
+										<th>Content</th>
+									</tr>
+								</thead>
+								<tbody id="heap">
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 
-
-			</div>
-
-			<div class="column">
-				<article class="message is-info">
-					<div class="message-header">
-						<p>Output</p>
-					</div>
-					<div class="message-body">
-						<nav class="level">
-							<div class="level-item">
-								<p class="buttons">
-									<a class="button is-success" id="run-button">
-										<span class="icon is-small">
-											<i class="fas fa-play"></i>
-										</span>
-										<span>Run Program</span>
-									</a>
-									<a class="button is-danger hidden" id="stop-button">
-										<span class="icon is-small">
-											<i class="fas fa-stop"></i>
-										</span>
-										<span>Stop Program</span>
-									</a>
-								</p>
-							</div>
-							<div class="field has-addons has-addons-centered">
-								<div class="control level-item">
-									<div class="select">
-										<select id="program-speed">
-											<option>Realtime</option>
-											<option>Fast</option>
-											<option selected>Normal</option>
-											<option>Slow</option>
-										</select>
+				<div class="column">
+					<article class="message is-info">
+						<div class="message-header">
+							<p>Output</p>
+						</div>
+						<div class="message-body">
+							<nav class="level">
+								<div class="level-item">
+									<p class="buttons">
+										<a class="button is-success" id="run-button">
+											<span class="icon is-small">
+												<i class="fas fa-play"></i>
+											</span>
+											<span>Run Program</span>
+										</a>
+										<a class="button is-danger hidden" id="stop-button">
+											<span class="icon is-small">
+												<i class="fas fa-stop"></i>
+											</span>
+											<span>Stop Program</span>
+										</a>
+									</p>
+								</div>
+								<div class="field has-addons has-addons-centered">
+									<div class="control level-item">
+										<div class="select">
+											<select id="program-speed">
+												<option>Realtime</option>
+												<option>Fast</option>
+												<option selected>Normal</option>
+												<option>Slow</option>
+											</select>
+										</div>
+									</div>
+									<div class="control">
+										<a class="button is-static">
+											Speed
+										</a>
 									</div>
 								</div>
-								<div class="control">
-									<a class="button is-static">
-										Speed
-									</a>
-								</div>
+							</nav>
+							<hr>
+							<div class="control">
+								<textarea class="textarea has-fixed-size" id="program-output" placeholder="Run your program and the output will appear here!"
+								 readonly></textarea>
 							</div>
-						</nav>
-						<hr>
-						<div class="control">
-							<textarea class="textarea has-fixed-size" id="program-output" placeholder="Run your program and the output will appear here!"
-							 readonly></textarea>
 						</div>
-					</div>
-				</article>
+					</article>
+				</div>
 			</div>
-
 		</div>
 
 		</div>
