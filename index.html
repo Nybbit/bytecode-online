@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Interactive Online Bytecode Interpreter</title>
+
+	<link rel="stylesheet" type="text/css" href="main.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+	<!-- Hero -->
+	<section class="hero is-primary">
+		<div class="hero-body">
+			<div class="container">
+				<h1 class="title">
+					Bytecode Online
+				</h1>
+				<h2 class="subtitle">
+					An interactive education tool to help you wrap your head around how stack-based virtual machines work.
+				</h2>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<div class="columns">
+				<div class="column">
+					<div class="tabs">
+						<ul>
+							<li id="help-tab" class="is-active">
+								<a>
+									<span class="icon is-small"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+									<span>Help and Manual</span>
+								</a>
+							</li>
+							<li id="challenges-tab">
+								<a>
+									<span class="icon is-small"><i class="fa fa-book" aria-hidden="true"></i></span>
+									<span>Challenges</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div id="help">
+						<h1 class="title">
+							Help and Manual
+						</h1>
+						<div class="tile is-ancestor">
+							<div class="tile is-vertical">
+								<div class="tile">
+									<div class="tile is-parent">
+										<article class="tile is-child notification">
+											<h4 class="title is-4">
+												Bytecode
+											</h4>
+											<p>
+												<i>"Bytecode ... is a form of instruction set designed for efficient execution by a software interpreter"</i>
+												-<a href="https://en.wikipedia.org/wiki/Bytecode" target="_blank">Wikipedia</a>
+											</p>
+											<br>
+											<p>Bytecode programs are made up of <strong>operation codes</strong> aka <strong>opcodes</strong>. Opcodes
+												are
+												single basic instructions (for example,
+												<i>push</i> or <i>add</i>). On this site, you can write simple programs using these opcodes. Programs are run instruction by instruction starting on line 1.</p>
+											<br>
+											<a class="button is-warning" id="opcode-toggle">Toggle opcode cheat sheet</a>
+										</article>
+									</div>
+									<div class="tile is-parent">
+										<article class="tile is-child notification">
+											<h4 class="title is-4">
+												Memory
+											</h4>
+											<p><strong>The Stack</strong> is a fixed-size region of memory (in this case, it has a maximum size of 8)
+												where data is modified in a Last-In-First-Out (LIFO) manner. You only have access to the top of the stack,
+												meaning
+												you can only put things on the top or take things off the top. You cannot add or remove something from the
+												middle or
+												bottom of the stack.</p>
+											<p><strong>The Heap</strong>, unlike the stack, does not have a fixed-size and data can be modified anywhere
+												in it. To put something in the heap you must first push it onto the stack and then use the opcode <strong>store_var</strong>.</p>
+										</article>
+									</div>
+								</div>
+								<div class="tile hidden" id="opcode-list">
+									<div class="tile is-parent">
+										<article class="tile is-child notification is-warning">
+											<h4 class="title is-4">
+												Opcodes
+											</h4>
+											<p><strong><i>Important info</i></strong></p>
+											<p>- <strong>Pop</strong> means to remove an element off the top of the stack</p>
+											<p>- <strong>Push</strong> means to add an element onto the top of the stack</p>
+											<p>- <strong>Print</strong> means to output something to the output console (underneath the "Run Program" button)</p>
+											<p>- When an opcode needs to interact with an element in the stack (for example, printing a number), it will pop it from the stack to read it and <strong>it will not replace it</strong></p>
+											<br>
+											<p><strong>push [number]</strong> - Push a number onto the stack</p>
+											<p><strong>jump [number]</strong> - Jump to specified line unconditionally</p>
+											<p><strong>jump_true [number]</strong> - Pops the stack and jumps to specified line if the top element
+												was <strong>1</strong></p>
+											<p><strong>jump_false [number]</strong> - Pops the stack and jumps to specified line if the top
+												element was <strong>0</strong></p>
+											<p><strong>store_var [number]</strong> - Pops the stack and stores the top element in heap at the specified
+												location</p>
+											<p><strong>load_var [number]</strong> - Copies data from heap at specified location pushes it onto the stack</p>
+
+											<p><strong>pop</strong> - Removes the top element from the stack (Chances are you won't use this opcode)</p>
+											<p><strong>print</strong> - Pops and prints the top element of the stack</p>
+											<p><strong>add</strong> - Pops the top two numbers, adds them and pushes the sum onto the stack (<strong>top-1</strong>
+												+ <strong>top</strong>)</p>
+											<p><strong>subtract</strong> - Pops the top two numbers, subtracts them and pushes the difference onto the
+												stack (<strong>top-1</strong> - <strong>top</strong>)</p>
+											<p><strong>multiply</strong> - Pops the top two numbers, multiplies them and pushes the product onto the
+												stack (<strong>top-1</strong> * <strong>top</strong>)</p>
+											<p><strong>divide</strong> - Pops the top two numbers, divides them and pushes the quotient onto the stack (<strong>top-1</strong>
+												/ <strong>top</strong>)</p>
+											<p><strong>less_than</strong> - Pops the top two numbers and compares them. Pushes 1 if true, otherwise
+												pushes 0 (<strong>top-1</strong> &lt; <strong>top</strong>)</p>
+											<p><strong>equal</strong> - Pops the top two numbers and compares them. Pushes 1 if true, otherwise pushes 0
+												(<strong>top-1</strong> == <strong>top</strong>)</p>
+											<p><strong>greater_than</strong> - Pops the top two numbers and compares them. Pushes 1 if true, otherwise
+												pushes 0 (<strong>top-1</strong> &gt; <strong>top</strong>)</p>
+											<p><strong>exit</strong> - Stops the program</p>
+										</article>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="challenges" class="hidden">
+						<h1 class="title">
+							Challenges
+						</h1>
+						<div class="tile is-ancestor" id="challenge-list">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="columns">
+			<!-- Program and output -->
+			<div class="column">
+				<h1 class="title">
+					Program
+				</h1>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Line</th>
+							<th>Instruction</th>
+						</tr>
+					</thead>
+					<tbody id="program">
+					</tbody>
+				</table>
+			</div>
+
+			<div class="column">
+				<div class="columns">
+					<div class="column">
+						<h1 class="title">
+							Stack
+						</h1>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Index</th>
+									<th>Content</th>
+								</tr>
+							</thead>
+							<tbody id="stack">
+							</tbody>
+						</table>
+					</div>
+					<div class="column">
+						<h1 class="title">
+							Heap
+						</h1>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Location</th>
+									<th>Content</th>
+								</tr>
+							</thead>
+							<tbody id="heap">
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+
+			</div>
+
+			<div class="column">
+				<article class="message is-info">
+					<div class="message-header">
+						<p>Output</p>
+					</div>
+					<div class="message-body">
+						<nav class="level">
+							<div class="level-item">
+								<p class="buttons">
+									<a class="button is-success" id="run-button">
+										<span class="icon is-small">
+											<i class="fas fa-play"></i>
+										</span>
+										<span>Run Program</span>
+									</a>
+									<a class="button is-danger hidden" id="stop-button">
+										<span class="icon is-small">
+											<i class="fas fa-stop"></i>
+										</span>
+										<span>Stop Program</span>
+									</a>
+								</p>
+							</div>
+							<div class="field has-addons has-addons-centered">
+								<div class="control level-item">
+									<div class="select">
+										<select id="program-speed">
+											<option>Realtime</option>
+											<option>Fast</option>
+											<option selected>Normal</option>
+											<option>Slow</option>
+										</select>
+									</div>
+								</div>
+								<div class="control">
+									<a class="button is-static">
+										Speed
+									</a>
+								</div>
+							</div>
+						</nav>
+						<hr>
+						<div class="control">
+							<textarea class="textarea has-fixed-size" id="program-output" placeholder="Run your program and the output will appear here!"
+							 readonly></textarea>
+						</div>
+					</div>
+				</article>
+			</div>
+
+		</div>
+
+		</div>
+	</section>
+
+	<script type="text/javascript" src="constants.js"></script>
+	<script type="text/javascript" src="interpreter.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>
+
+<template template="opcode-arg">
+	<tr>
+		<th>
+			0
+		</th>
+		<td>
+			<div class="field has-addons has-addons-centered">
+				<p class="control">
+					<span class="select">
+						<select>
+						</select>
+					</span>
+				</p>
+				<p class="control arg-list">
+					<input class="input" type="number" placeholder="Parameter">
+				</p>
+			</div>
+		</td>
+	</tr>
+</template>
+
+<template template="stack">
+	<tr>
+		<th>
+			0
+		</th>
+		<td>
+			<p></p>
+		</td>
+	</tr>
+</template>
+
+<template template="challenge">
+	<div class="tile is-parent">
+		<article class="tile is-child challenge-tile notification">
+			<h4 class="title is-4 challenge-title">
+				Challenge
+			</h4>
+			<p>Write a program that produces the following output</p>
+			<textarea class="textarea has-fixed-size challenge-output" readonly>OUTPUT</textarea>
+		</article>
+	</div>
+</template>
